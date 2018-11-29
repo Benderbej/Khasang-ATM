@@ -8,10 +8,11 @@ public class Main {
         //парень пришел в банк и оформил карточку
         Bank bank = new Bank();
 
+        //где-то в банке...
         Client client = bank.firstServiceClient("viktor_semenovich");
-        System.out.println("client hash"+client.hashCode());
 
-
+        //hashCode() и equals() переопределены в Client, BankAccount и AbstractCard что позволяет нам:
+        //где-то в банкомате...
         Client theSameClient = new Client("viktor_semenovich");
         BankAccount bankAccount = new BankAccount();
         theSameClient.setBasicAccount(bankAccount);
@@ -20,40 +21,9 @@ public class Main {
         theSameClient.addCard(sameCard);
         theSameClient.setBasicCard(sameCard);
 
-        Client theSameClient2 = new Client("viktor_semenovich");
-        BankAccount bankAccount2 = new BankAccount();
-        theSameClient2.setBasicAccount(bankAccount2);
-        theSameClient2.addAccount(bankAccount2);
-        Card sameCard2 = new SomeCard(theSameClient2, bankAccount2);
-        theSameClient2.addCard(sameCard2);
-        theSameClient2.setBasicCard(sameCard2);
+        System.out.println("client hash"+client.hashCode());//возвращает hash-1232468989
+        System.out.println("theSameClient hash"+theSameClient.hashCode());//возвращает такой же хеш hash-1232468989
 
-        System.out.println("theSameClient hash"+theSameClient.hashCode());//возвращает hash-1232468989
-        System.out.println("theSameClient2 hash"+theSameClient2.hashCode());//возвращает такой же хеш hash-1232468989
-
-        //System.out.println("bankAccount.equals(bankAccount2); "+bankAccount.equals(bankAccount2));
-        //System.out.println("theSameClient.getAccounts().equals(theSameClient2.getAccounts()) "+theSameClient.getAccounts().equals(theSameClient2.getAccounts()));
-        if(sameCard == sameCard2){
-            System.out.println("== links");
-        }
-        if(sameCard.equals(sameCard2)){
-            System.out.println(" cards equals");//но при этом объекты не equals !!!
-        }
-        if(theSameClient == theSameClient2){
-            System.out.println("== links");
-        }
-        if(theSameClient.equals(theSameClient2)){
-            System.out.println("clients equals");//но при этом объекты не equals !!!
-        }
-        HashSet<Client> cls = new HashSet<>();
-        cls.add(theSameClient);
-        if (cls.contains(theSameClient2)){
-            System.out.println("hashcodes equals and object found");
-        }
-
-
-        //где-то в банкомате...
-        //Client client = new Client("viktor_semenovich");
         if ( bank.getClients().contains(theSameClient)){
             System.out.println("contains");
 
