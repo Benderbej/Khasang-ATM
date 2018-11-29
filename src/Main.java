@@ -4,42 +4,48 @@ import java.util.HashSet;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
 
         //парень пришел в банк и оформил карточку
         Bank bank = new Bank();
 
         Client client = bank.firstServiceClient("viktor_semenovich");
-        System.out.println("theSameClient hash"+client.hashCode());
+        System.out.println("client hash"+client.hashCode());
 
 
         Client theSameClient = new Client("viktor_semenovich");
         BankAccount bankAccount = new BankAccount();
         theSameClient.setBasicAccount(bankAccount);
         theSameClient.addAccount(bankAccount);
-        Card sameCard = new SomeCard(theSameClient, bankAccount);
-        theSameClient.addCard(sameCard);
-        theSameClient.setBasicCard(sameCard);
+        //Card sameCard = new SomeCard(theSameClient, bankAccount);
+        //theSameClient.addCard(sameCard);
+        //theSameClient.setBasicCard(sameCard);
 
         Client theSameClient2 = new Client("viktor_semenovich");
         BankAccount bankAccount2 = new BankAccount();
         theSameClient.setBasicAccount(bankAccount2);
         theSameClient.addAccount(bankAccount2);
-        Card sameCard2 = new SomeCard(theSameClient2, bankAccount2);
-        theSameClient.addCard(sameCard2);
-        theSameClient.setBasicCard(sameCard2);
-
+        //Card sameCard2 = new SomeCard(theSameClient2, bankAccount2);
+        //theSameClient.addCard(sameCard2);
+        //theSameClient.setBasicCard(sameCard2);
 
         System.out.println("theSameClient hash"+theSameClient.hashCode());
         System.out.println("theSameClient2 hash"+theSameClient2.hashCode());
 
+        if(theSameClient == theSameClient2){
+            System.out.println("== links");
+        }
+        if(theSameClient.equals(theSameClient2)){
+            System.out.println("equals");
+        }
+
+        HashSet<Client> cls = new HashSet<>();
+        cls.add(theSameClient);
+        if (cls.contains(theSameClient2)){
+            System.out.println("hashcodes equals and object found");
+        }
+
+
         //где-то в банкомате...
-
-
-
-
-
-
         //Client client = new Client("viktor_semenovich");
         if ( bank.getClients().contains(theSameClient)){
             System.out.println("contains");
