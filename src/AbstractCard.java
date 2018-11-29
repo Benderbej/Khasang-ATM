@@ -4,7 +4,6 @@ public abstract class AbstractCard implements Card {
 
     private PaySystem paySytem;
     private long cardNumber;
-    private Client client;
     private BankAccount bankAccount;
 
     public abstract void insert();
@@ -13,10 +12,9 @@ public abstract class AbstractCard implements Card {
 
     private AbstractCard(){};//чтобы неповадно было без аргументов создавать!!!
 
-    public AbstractCard(PaySystem paySystem, long cardNumber, Client client, BankAccount bankAccount){
+    public AbstractCard(PaySystem paySystem, long cardNumber, BankAccount bankAccount){
         this.paySytem = paySystem;
         this.cardNumber = cardNumber;
-        this.client = client;
         this.bankAccount = bankAccount;
     }
 
@@ -28,7 +26,6 @@ public abstract class AbstractCard implements Card {
         bankAccount.setBalance(bigDecimal);
     }
 
-    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -38,7 +35,6 @@ public abstract class AbstractCard implements Card {
 
         if (cardNumber != that.cardNumber) return false;
         if (paySytem != null ? !paySytem.equals(that.paySytem) : that.paySytem != null) return false;
-        if (client != null ? !client.equals(that.client) : that.client != null) return false;
         return bankAccount != null ? bankAccount.equals(that.bankAccount) : that.bankAccount == null;
     }
 
@@ -46,9 +42,8 @@ public abstract class AbstractCard implements Card {
     public int hashCode() {
         int result = paySytem != null ? paySytem.hashCode() : 0;
         result = 31 * result + (int) (cardNumber ^ (cardNumber >>> 32));
-        result = 31 * result + (client != null ? client.hashCode() : 0);
         result = 31 * result + (bankAccount != null ? bankAccount.hashCode() : 0);
         return result;
     }
-    */
+
 }

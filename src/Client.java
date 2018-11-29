@@ -54,15 +54,15 @@ public class Client {
         this.basicCard = basicCard;
     }
 
-
-
     @Override
     public boolean equals(Object o) {
+        //if(1==1){return true;}
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Client client = (Client) o;
-
+        //System.out.println("equals1 "+(cardOwnerNameLat != null ? !cardOwnerNameLat.equals(client.cardOwnerNameLat) : client.cardOwnerNameLat != null));
+        //System.out.println("equals2 "+(accounts != null ? !accounts.equals(client.accounts) : client.accounts != null));
+        //System.out.println("equals3 "+(basicAccount != null ? basicAccount.equals(client.basicAccount) : client.basicAccount == null));
         if (cardOwnerNameLat != null ? !cardOwnerNameLat.equals(client.cardOwnerNameLat) : client.cardOwnerNameLat != null)
             return false;
         if (accounts != null ? !accounts.equals(client.accounts) : client.accounts != null) return false;
@@ -71,6 +71,8 @@ public class Client {
         if (cards != null ? !cards.equals(client.cards) : client.cards != null) return false;
         return basicCard != null ? basicCard.equals(client.basicCard) : client.basicCard == null;
     }
+
+
 
     @Override
     public int hashCode() {

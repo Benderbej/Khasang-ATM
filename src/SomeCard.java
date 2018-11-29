@@ -1,11 +1,11 @@
 public class SomeCard extends AbstractCard {
 
-    public SomeCard(PaySystem paySystem, long cardNumber, Client client, BankAccount bankAccount) {
-        super(paySystem, cardNumber, client, bankAccount);
+    public SomeCard(PaySystem paySystem, long cardNumber, BankAccount bankAccount) {
+        super(paySystem, cardNumber, bankAccount);
     }
 
     public SomeCard(Client client, BankAccount bankAccount) {
-        this(Bank.getPaySystem(), Bank.getCardNum(), client, bankAccount);
+        this(Bank.getPaySystem(), Bank.getCardNum(), bankAccount);
     }
 
     @Override
@@ -17,5 +17,4 @@ public class SomeCard extends AbstractCard {
     public void eject() {
         System.out.println("[...]здесь какой то текст-предупреждение о том что нельзя никому говорить номер и cvc код [...]");
     }
-
 }

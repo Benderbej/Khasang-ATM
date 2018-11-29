@@ -33,6 +33,7 @@ public class Bank {
         client.addAccount(account);
         Card card = new SomeCard(client, account);
         cards.add(card);
+        client.addCard(card);
         client.setBasicCard(card);
         clients.add(client);
         return client;

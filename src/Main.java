@@ -16,28 +16,35 @@ public class Main {
         BankAccount bankAccount = new BankAccount();
         theSameClient.setBasicAccount(bankAccount);
         theSameClient.addAccount(bankAccount);
-        //Card sameCard = new SomeCard(theSameClient, bankAccount);
-        //theSameClient.addCard(sameCard);
-        //theSameClient.setBasicCard(sameCard);
+        Card sameCard = new SomeCard(theSameClient, bankAccount);
+        theSameClient.addCard(sameCard);
+        theSameClient.setBasicCard(sameCard);
 
         Client theSameClient2 = new Client("viktor_semenovich");
         BankAccount bankAccount2 = new BankAccount();
-        theSameClient.setBasicAccount(bankAccount2);
-        theSameClient.addAccount(bankAccount2);
-        //Card sameCard2 = new SomeCard(theSameClient2, bankAccount2);
-        //theSameClient.addCard(sameCard2);
-        //theSameClient.setBasicCard(sameCard2);
+        theSameClient2.setBasicAccount(bankAccount2);
+        theSameClient2.addAccount(bankAccount2);
+        Card sameCard2 = new SomeCard(theSameClient2, bankAccount2);
+        theSameClient2.addCard(sameCard2);
+        theSameClient2.setBasicCard(sameCard2);
 
-        System.out.println("theSameClient hash"+theSameClient.hashCode());
-        System.out.println("theSameClient2 hash"+theSameClient2.hashCode());
+        System.out.println("theSameClient hash"+theSameClient.hashCode());//возвращает hash-1232468989
+        System.out.println("theSameClient2 hash"+theSameClient2.hashCode());//возвращает такой же хеш hash-1232468989
 
+        //System.out.println("bankAccount.equals(bankAccount2); "+bankAccount.equals(bankAccount2));
+        //System.out.println("theSameClient.getAccounts().equals(theSameClient2.getAccounts()) "+theSameClient.getAccounts().equals(theSameClient2.getAccounts()));
+        if(sameCard == sameCard2){
+            System.out.println("== links");
+        }
+        if(sameCard.equals(sameCard2)){
+            System.out.println(" cards equals");//но при этом объекты не equals !!!
+        }
         if(theSameClient == theSameClient2){
             System.out.println("== links");
         }
         if(theSameClient.equals(theSameClient2)){
-            System.out.println("equals");
+            System.out.println("clients equals");//но при этом объекты не equals !!!
         }
-
         HashSet<Client> cls = new HashSet<>();
         cls.add(theSameClient);
         if (cls.contains(theSameClient2)){
