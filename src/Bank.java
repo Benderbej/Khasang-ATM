@@ -27,8 +27,7 @@ public class Bank {
         return account;
     }
 
-    public Client firstServiceClient(String engName){//обслуживание нового клиента по выпуску карты
-        Client client = new Client(engName);
+    public Client firstServiceClient(Client client){//обслуживание нового клиента по выпуску карты
         BankAccount account = openFirstAccount(client);
         client.addAccount(account);
         Card card = new SomeCard(client, account);
