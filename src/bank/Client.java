@@ -10,76 +10,33 @@ import java.util.HashSet;
 public class Client {
 
     private String cardOwnerNameLat;
-    private HashSet<BankAccount> accounts;
-    private BankAccount basicAccount;
-    private HashSet<Card> cards;
-    private Card basicCard;
 
     public Client(String cardOwnerNameLat) {
         this.cardOwnerNameLat = cardOwnerNameLat;
-        accounts = new HashSet<>();
-        cards = new HashSet<>();
-    }
-
-    public HashSet<BankAccount> getAccounts() {
-        return accounts;
-    }
-
-    public BankAccount getAccount(BankAccount account) {
-        accounts.contains(account);
-        return account;
-    }
-
-    public BankAccount addAccount(BankAccount bankAccount){
-        accounts.add(bankAccount);
-        return bankAccount;
-    }
-
-    public BankAccount getBasicAccount() {
-        return basicAccount;
-    }
-
-    public void setBasicAccount(BankAccount basicAccount) {
-        this.basicAccount = basicAccount;
-    }
-
-    public void addCard(Card card) {
-        cards.add(card);
-    }
-
-    public Card getBasicCard() {
-        return basicCard;
-    }
-
-    public void setBasicCard(Card basicCard) {
-        this.basicCard = basicCard;
     }
 
     @Override
     public boolean equals(Object o) {
-        //if(1==1){return true;}
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Client client = (Client) o;
-        //System.out.println("equals1 "+(cardOwnerNameLat != null ? !cardOwnerNameLat.equals(client.cardOwnerNameLat) : client.cardOwnerNameLat != null));
-        //System.out.println("equals2 "+(accounts != null ? !accounts.equals(client.accounts) : client.accounts != null));
-        //System.out.println("equals3 "+(basicAccount != null ? basicAccount.equals(client.basicAccount) : client.basicAccount == null));
-        if (cardOwnerNameLat != null ? !cardOwnerNameLat.equals(client.cardOwnerNameLat) : client.cardOwnerNameLat != null)
-            return false;
-        if (accounts != null ? !accounts.equals(client.accounts) : client.accounts != null) return false;
-        if (basicAccount != null ? !basicAccount.equals(client.basicAccount) : client.basicAccount != null)
-            return false;
-        if (cards != null ? !cards.equals(client.cards) : client.cards != null) return false;
-        return basicCard != null ? basicCard.equals(client.basicCard) : client.basicCard == null;
+
+        return cardOwnerNameLat != null ? cardOwnerNameLat.equals(client.cardOwnerNameLat) : client.cardOwnerNameLat == null;
     }
 
     @Override
     public int hashCode() {
-        int result = cardOwnerNameLat != null ? cardOwnerNameLat.hashCode() : 0;
-        result = 31 * result + (accounts != null ? accounts.hashCode() : 0);
-        result = 31 * result + (basicAccount != null ? basicAccount.hashCode() : 0);
-        result = 31 * result + (cards != null ? cards.hashCode() : 0);
-        result = 31 * result + (basicCard != null ? basicCard.hashCode() : 0);
-        return result;
+        return cardOwnerNameLat != null ? cardOwnerNameLat.hashCode() : 0;
     }
+
+    public BankAccount getBasicAccount(Bank bank) {
+        return bank.getBasicAccount(this);
+    }
+
+    public Card getBasicCard(Bank bank){
+        return bank.getBasicCard(this);
+    }
+
+
 }

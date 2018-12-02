@@ -10,67 +10,66 @@ import java.util.HashSet;
 public class Bank {
 
     private HashSet<Client> clients;
-    private HashSet<Card> cards;
-    private HashSet<BankAccount> accounts;
     private HashMap<Client, BankAccount> clientsBasicAccounts;
-
-
     private HashMap<Client, ArrayList<BankAccount>> clientsAccounts;//!!!!!!!!!!!!
-    private HashMap<Card, BankAccount>  cardsAccounts;//!!!!!!!!!!!
-
-
+    //счет может существовать без карты(создается раньше карты), а карта без счета,
+    // кроме того, к одной карте может быть привязано несколько счетов, а у на один счет оформлено несколько карт... налицо - многие ко многим...
+    //как наиболее простой способ решения проблемы я решил создать два хешмапа, один для одной связи, другой - для другой, сделать приватными эти поля,
+    //а для доступа открыть лишь метод bindAccountToCard, в котором бы не забывалось одновлять данные в обоих хешмапах
+    //пробовал и другие варианты решения, но мне они показались громоздкими и "дорогими"
+    //выпендриватся с циклами containsValue, переворачивать ключи со значениями, и заниматься подобным  - в итоге не стал(хотя пробовал по всякому)
+    //от простого HashMap отказыаться не хотел, изза уникальности ключей,  O(1) сложности операций get(), и возможности инициализировать null-ом значения
+    private HashMap<Card, BankAccount>  cardsAccounts;
+    private HashMap<BankAccount, Card> accountsCards;
     private static PaySystem defaultPaySystem;
 
     public Bank() {
         this.clients = new HashSet<>();
-        this.cards = new HashSet<>();
-        this.accounts = new HashSet<>();
         this.clientsBasicAccounts = new HashMap<>();
-        defaultPaySystem = new PaySystem("Mastercard");
-
         clientsAccounts = new HashMap<>();
         cardsAccounts = new HashMap<>();
+        accountsCards = new HashMap<>();
+        defaultPaySystem = new PaySystem("Mastercard");
     }
 
-
-    void bindAccountToCard(Card card, BankAccount account){
-        cardsAccounts.put(card, account);
-    }
-
-    void addCard(Client client, Card card){
-        cards.add(card);
+    void addCard(Card card){
+        cardsAccounts.put(card, null);
     }
 
     void addClient(Client client){
         clients.add(client);
+        clientsAccounts.put(client, new ArrayList<>());
     }
 
     void addAccount(Client client, BankAccount account){
         clientsAccounts.get(client).add(account);
     }
 
-
-
-
-
-
-    public BankAccount openFirstAccount(Client client) {//при первом создании счета для клиента добавляем счет также в список базовых счетов банка
-        BankAccount account = new BankAccount();
-        client.addAccount(account);
-        client.setBasicAccount(account);
-        accounts.add(account);
-        clientsBasicAccounts.put(client, account);
-        return account;
+    public void bindAccountToCard(Card card, BankAccount account){
+        cardsAccounts.put(card, account);
+        accountsCards.put(account, card);
     }
 
-    public Client firstServiceClient(Client client){//обслуживание нового клиента по выпуску карты
-        BankAccount account = openFirstAccount(client);
-        client.addAccount(account);
+    public Client firstServiceClient(Client client){//обслуживание нового клиента по выпуску карты и созданию основного счета
+        addClient(client);
+
+        BankAccount account = new BankAccount();
+        addAccount(client, account);
+        clientsBasicAccounts.put(client, account);
         Card card = new SomeCard(client, account);
-        cards.add(card);
-        client.addCard(card);
-        client.setBasicCard(card);
+        bindAccountToCard(card, account);
+        addCard(card);
+
+
         clients.add(client);
+
+
+
+
+        return client;
+    }
+
+    private Client updateClient(Client client, BankAccount bankAccount) {
         return client;
     }
 
@@ -87,4 +86,13 @@ public class Bank {
     public HashSet<Client> getClients() {
         return clients;
     }
+
+    BankAccount getBasicAccount(Client client){
+        return clientsBasicAccounts.get(client);
+    }
+
+    Card getBasicCard(Client client){
+        return accountsCards.get(getBasicAccount(client));
+    }
+
 }

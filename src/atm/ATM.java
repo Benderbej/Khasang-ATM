@@ -1,11 +1,13 @@
 package atm;
 
+import bank.Bank;
 import card.Card;
 
 import java.math.BigDecimal;
 
 public class ATM {
 
+    private Bank bank;
     private Card currentCard;
 
     public boolean processInsertCard(Card card) {
@@ -32,6 +34,7 @@ public class ATM {
     }
 
     public void putCash(BigDecimal cash) {
+        System.out.println("");
         currentCard.setBalance(currentCard.getBalance().add(cash));
         System.out.println("Сумма "+cash+" зачислена на счет");
     }
@@ -69,9 +72,10 @@ public class ATM {
     /*
     private boolean checkPin(int pin){
         boolean res = false;
-
-
-
     }
     */
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
 }
