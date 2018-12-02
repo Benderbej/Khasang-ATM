@@ -1,6 +1,8 @@
+package bank;
+
+import card.Card;
 
 import java.util.HashSet;
-import java.util.LinkedList;
 
 /*
 для простоты пока каждый клиент является владельцем карты
@@ -11,10 +13,9 @@ public class Client {
     private HashSet<BankAccount> accounts;
     private BankAccount basicAccount;
     private HashSet<Card> cards;
-
     private Card basicCard;
 
-    Client(String cardOwnerNameLat) {
+    public Client(String cardOwnerNameLat) {
         this.cardOwnerNameLat = cardOwnerNameLat;
         accounts = new HashSet<>();
         cards = new HashSet<>();
@@ -71,8 +72,6 @@ public class Client {
         if (cards != null ? !cards.equals(client.cards) : client.cards != null) return false;
         return basicCard != null ? basicCard.equals(client.basicCard) : client.basicCard == null;
     }
-
-
 
     @Override
     public int hashCode() {

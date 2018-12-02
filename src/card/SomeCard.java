@@ -1,3 +1,10 @@
+package card;
+
+import bank.Bank;
+import bank.BankAccount;
+import bank.Client;
+import bank.PaySystem;
+
 public class SomeCard extends AbstractCard {
 
     public SomeCard(PaySystem paySystem, long cardNumber, BankAccount bankAccount) {

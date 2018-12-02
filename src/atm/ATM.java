@@ -1,3 +1,7 @@
+package atm;
+
+import card.Card;
+
 import java.math.BigDecimal;
 
 public class ATM {

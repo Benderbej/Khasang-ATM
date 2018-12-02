@@ -1,3 +1,8 @@
+package card;
+
+import bank.BankAccount;
+import bank.PaySystem;
+
 import java.math.BigDecimal;
 
 public abstract class AbstractCard implements Card {
@@ -45,5 +50,4 @@ public abstract class AbstractCard implements Card {
         result = 31 * result + (bankAccount != null ? bankAccount.hashCode() : 0);
         return result;
     }
-
 }

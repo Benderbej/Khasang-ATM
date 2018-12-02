@@ -1,10 +1,12 @@
+package bank;
+
 import java.math.BigDecimal;
 
 public class BankAccount {
 
     private BigDecimal balance;
 
-    BankAccount() {
+    public BankAccount() {
         this.balance = new BigDecimal("0");;
     }
 

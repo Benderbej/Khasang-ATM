@@ -1,6 +1,8 @@
+package card;
+
 import java.math.BigDecimal;
 
-public interface Card extends  Insertable {
+public interface Card extends Insertable {
 
     BigDecimal getBalance();
 

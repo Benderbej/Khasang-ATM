@@ -1,10 +1,14 @@
+package bank;
+
+import card.Card;
+import card.SomeCard;
+
 import java.util.HashMap;
 import java.util.HashSet;
 
 public class Bank {
 
     private HashSet<Client> clients;
-    private HashSet<PaySystem> paySystems;
     private HashSet<Card> cards;
     private HashSet<BankAccount> accounts;
     private HashMap<Client, BankAccount> clientsBasicAccounts;
@@ -12,10 +16,10 @@ public class Bank {
 
     public Bank() {
         this.clients = new HashSet<>();
-        this.paySystems = new HashSet<>();
         this.cards = new HashSet<>();
         this.accounts = new HashSet<>();
         this.clientsBasicAccounts = new HashMap<>();
+        defaultPaySystem = new PaySystem("Mastercard");
     }
 
     public BankAccount openFirstAccount(Client client) {//при первом создании счета для клиента добавляем счет также в список базовых счетов банка

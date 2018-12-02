@@ -1,3 +1,5 @@
+package bank;
+
 public class PaySystem {
 
     private String name;

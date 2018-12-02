@@ -1,5 +1,13 @@
+package bank;
+
+import atm.ATM;
+import bank.Bank;
+import bank.BankAccount;
+import bank.Client;
+import card.Card;
+import card.SomeCard;
+
 import java.math.BigDecimal;
-import java.util.HashSet;
 
 public class Main {
 
@@ -11,12 +19,14 @@ public class Main {
         //где-то в банке...
         Client client = bank.firstServiceClient(new Client("viktor_semenovich"));
 
-        //hashCode() и equals() переопределены в Client, BankAccount и AbstractCard что позволяет нам:
+
+        //hashCode() и equals() переопределены в bank.Client, bank.BankAccount и AbstractCard что позволяет нам:
         //где-то в банкомате...
         Client theSameClient = new Client("viktor_semenovich");
         BankAccount bankAccount = new BankAccount();
         theSameClient.setBasicAccount(bankAccount);
         theSameClient.addAccount(bankAccount);
+
         Card sameCard = new SomeCard(theSameClient, bankAccount);
         theSameClient.addCard(sameCard);
         theSameClient.setBasicCard(sameCard);
@@ -40,11 +50,6 @@ public class Main {
         } else {
             System.out.println("client not found");
         }
-
-
-
-
-
     }
 }
 
@@ -52,16 +57,9 @@ public class Main {
 
 
 /*
-Самостоятельная работа
-a) Попробуйте по памяти, с нуля создать программу Atm, ту, которую мы делали.
-b) Доработайте задачи:
-Простые (beginner):
-1. Проверить вставлена ли карта перед снятием денег и инфо о балансе
-2. Перед снятием денег проверить достаточно ли финансов на карте
 
-Сложные (intermediate):
-1. Разнесите на три пакета весь код: пакет с АТМ, пакет с Картами и пакет с точкой входа.
-(для того, чтобы потренироваться использовать модификаторы доступа: public, protected, default, private)
+
+
 2. Сделайте так, чтобы деньги хранились на счету в банке, а не на карте.
 
 
@@ -73,9 +71,11 @@ b) Доработайте задачи:
 
 6. (*) У пользователя же может быть много счетов? Модифицируйте использование коллекции HashMap,
 чтобы сопоставлять пользователю коллекцию (реализующую интерфейс Set или List), которая уже в свою очередь хранит все счета клиента.
+
+
 7. (** на поиск информации) Используйте классы BigDecimal / BigInteger для хранения финансовых данных.
 8. Добавьте хранение и проверку pin-кода, чтобы операции с картой были защищены предварительным вводом пина.
-9. (*) Наряду с ATM добавьте класс InternetShop, который тоже может работать с картой, но вместо pin-кода использует для подтверждения CVV-код и срок действия.
+9. (*) Наряду с atm.ATM добавьте класс InternetShop, который тоже может работать с картой, но вместо pin-кода использует для подтверждения CVV-код и срок действия.
 10. (*** на проектирование) Добавьте эмуляцию режима 3d-secure, когда пользователю перед списанием с карты отправляется СМС с кодом подтверждения.
 Прочитайте детальнее, как устроен LinkedList: https://habrahabr.ru/post/127864/
 
@@ -83,8 +83,10 @@ b) Доработайте задачи:
 
 
 
+=======================================
 
-
+1. Разнесите на три пакета весь код: пакет с АТМ, пакет с Картами и пакет с точкой входа.
+(для того, чтобы потренироваться использовать модификаторы доступа: public, protected, default, private)
 
 
 3. Добавьте класс Клиент, экземпляр которого нужно передавать банку для выпуска карты и открытия счета.
