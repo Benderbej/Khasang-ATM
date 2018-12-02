@@ -3,6 +3,7 @@ package bank;
 import card.Card;
 import card.SomeCard;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -12,6 +13,12 @@ public class Bank {
     private HashSet<Card> cards;
     private HashSet<BankAccount> accounts;
     private HashMap<Client, BankAccount> clientsBasicAccounts;
+
+
+    private HashMap<Client, ArrayList<BankAccount>> clientsAccounts;//!!!!!!!!!!!!
+    private HashMap<Card, BankAccount>  cardsAccounts;//!!!!!!!!!!!
+
+
     private static PaySystem defaultPaySystem;
 
     public Bank() {
@@ -20,7 +27,32 @@ public class Bank {
         this.accounts = new HashSet<>();
         this.clientsBasicAccounts = new HashMap<>();
         defaultPaySystem = new PaySystem("Mastercard");
+
+        clientsAccounts = new HashMap<>();
+        cardsAccounts = new HashMap<>();
     }
+
+
+    void bindAccountToCard(Card card, BankAccount account){
+        cardsAccounts.put(card, account);
+    }
+
+    void addCard(Client client, Card card){
+        cards.add(card);
+    }
+
+    void addClient(Client client){
+        clients.add(client);
+    }
+
+    void addAccount(Client client, BankAccount account){
+        clientsAccounts.get(client).add(account);
+    }
+
+
+
+
+
 
     public BankAccount openFirstAccount(Client client) {//при первом создании счета для клиента добавляем счет также в список базовых счетов банка
         BankAccount account = new BankAccount();

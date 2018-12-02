@@ -65,4 +65,13 @@ public class ATM {
         if(currentCard != null){return true;}
         return false;
     }
+
+    /*
+    private boolean checkPin(int pin){
+        boolean res = false;
+
+
+
+    }
+    */
 }
