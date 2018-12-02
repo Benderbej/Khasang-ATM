@@ -50,22 +50,16 @@ public class Bank {
         accountsCards.put(account, card);
     }
 
-    public Client firstServiceClient(Client client){//обслуживание нового клиента по выпуску карты и созданию основного счета
+    public Client firstServiceClient(Client client, Card card, BankAccount account){//обслуживание нового клиента по выпуску карты и созданию основного счета
         addClient(client);
 
-        BankAccount account = new BankAccount();
+
+
         addAccount(client, account);
         clientsBasicAccounts.put(client, account);
-        Card card = new SomeCard(client, account);
-        bindAccountToCard(card, account);
         addCard(card);
-
-
+        bindAccountToCard(card, account);
         clients.add(client);
-
-
-
-
         return client;
     }
 

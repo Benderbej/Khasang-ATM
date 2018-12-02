@@ -17,24 +17,32 @@ public class Main {
         Bank bank = new Bank();
 
         //где-то в банке...
-        Client client = bank.firstServiceClient(new Client("viktor_semenovich"));
+        Client client = new Client("viktor_semenovich");
+        BankAccount account = new BankAccount();
+        Card card = new SomeCard(client, account);
+        client = bank.firstServiceClient(client, card, account);
 
 
         //hashCode() и equals() переопределены в bank.Client(сначала client содержал и объекты BankAccount и Card и хешкод и equals были определены и там) что позволяет нам:
         //где-то в банкомате... создать новый экземпляр, идентичный
         Client theSameClient = new Client("viktor_semenovich");
+        BankAccount account2 = new BankAccount();
+        Card card2 = new SomeCard(theSameClient, account);
+        theSameClient = bank.firstServiceClient(theSameClient, card2, account2);
+
+
         System.out.println("client hash"+client.hashCode());//возвращает hash-1232468989
         System.out.println("theSameClient hash"+theSameClient.hashCode());//возвращает такой же хеш hash-1232468989
         if ( bank.getClients().contains(theSameClient)){
             System.out.println("contains");
             ATM atm = new ATM();
-            atm.processInsertCard(bank.getBasicCard(client));
+            atm.processInsertCard(bank.getBasicCard(theSameClient));
             atm.getBalance();
             atm.putCash(new BigDecimal("20500"));
             atm.getBalance();
             atm.withdrawCash(new BigDecimal("240"));
             atm.getBalance();
-            atm.processInsertCard(bank.getBasicCard(client));
+            atm.processInsertCard(bank.getBasicCard(theSameClient));
             atm.processEjectCard();
         } else {
             System.out.println("client not found");
