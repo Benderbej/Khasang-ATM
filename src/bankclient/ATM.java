@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 
 public class ATM implements Checkable {
 
-    private Bank bank;
     private Card currentCard;
+    private int currentPin;
 
     public boolean processInsertCard(Card card) {
         boolean result = false;
@@ -70,18 +70,12 @@ public class ATM implements Checkable {
         return false;
     }
 
-    /*
-    private boolean checkPin(int pin){
-        boolean res = false;
-    }
-    */
-
-    public void setBank(Bank bank) {
-        this.bank = bank;
-    }
-
     @Override
     public boolean checkValid() {
-        return false;
+        return currentCard.checkValidByPin(currentPin);
+    }
+
+    public void setCurrentPin(int currentPin) {
+        this.currentPin = currentPin;
     }
 }

@@ -6,9 +6,8 @@ public interface Card {
 
     //boolean currentValidationPassed = false;//данные о последней валидации
 
-    int getCvv();//заставляем сразу определять cvv - насколько правомерен такой прием? так вообще делают? (setter не делаем чтобы была возможность сделать его private)
-
-    int getPin();//заставляем сразу определять cvv - насколько правомерен такой прием? так вообще делают? (setter не делаем чтобы была возможность сделать его private)
+    int DEFAULT_CVV  = 555;
+    int DEFAULT_PIN = 0000;
 
     boolean checkValidByCvv(int cvv);
 
@@ -21,4 +20,9 @@ public interface Card {
     void insert();
 
     void eject();
+
+    int getCvv();//заставляем сразу определять cvv - насколько правомерен такой прием? так вообще делают? (setter не делаем чтобы была возможность сделать его private)
+
+    int getPin();//заставляем сразу определять pin - насколько правомерен такой прием? так вообще делают? (setter не делаем чтобы была возможность сделать его private)
+
 }

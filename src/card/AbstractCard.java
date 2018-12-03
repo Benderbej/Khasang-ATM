@@ -10,28 +10,48 @@ public abstract class AbstractCard implements Card {
     private PaySystem paySytem;
     private long cardNumber;
     private BankAccount bankAccount;
+    private int cvv;
+    private int pin;
 
     public abstract void insert();
 
     public abstract void eject();
 
-    private AbstractCard(){};//чтобы неповадно было без аргументов создавать!!!
+    private AbstractCard() {};//чтобы неповадно было без аргументов создавать!!!
 
-    public AbstractCard(PaySystem paySystem, long cardNumber, BankAccount bankAccount){
+    public AbstractCard(PaySystem paySystem, long cardNumber, BankAccount bankAccount, int cvv, int pin) throws CardImplementationException {
         this.paySytem = paySystem;
         this.cardNumber = cardNumber;
         this.bankAccount = bankAccount;
+        initCvv(cvv);
+        initPin(pin);
+    }
+
+    private void initCvv(int cvv) {
+        if (Integer.toString(cvv).length()!=3){
+            try {
+                throw new Exception("setCvv() in Card Interface is not correctly implemented");//насколько правомочна такая конструкция?
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        this.cvv = cvv;
+    }
+
+    private void initPin(int pin) throws CardImplementationException {
+        if (Integer.toString(pin).length()!=4){throw new CardImplementationException("setPin() in Card Interface is not correctly implemented");}//здесь сделал немного по-другому, в интерфейсе будет видно что метод может выкинуть исключение
+        this.pin = pin;
     }
 
     public boolean checkValidByCvv(int cvv) {
         boolean res = (cvv == this.getCvv()) ? true : false;
         return res;
-    };
+    }
 
     public boolean checkValidByPin(int pin) {
         boolean res = (pin == this.getPin()) ? true : false;
         return res;
-    };
+    }
 
     public BigDecimal getBalance() {
         return bankAccount.getBalance();
@@ -41,16 +61,12 @@ public abstract class AbstractCard implements Card {
         bankAccount.setBalance(bigDecimal);
     }
 
-    int setCvv() {
-        return 0;
-    }
-
     public int getCvv() {
         return 0;
     }
 
-    int setPin() {
-        return 0;
+    private void setPin(int pin) {
+        this.pin = pin;
     }
 
     public int getPin() {

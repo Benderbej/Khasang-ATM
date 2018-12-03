@@ -2,17 +2,16 @@ package card;
 
 import bank.Bank;
 import bank.BankAccount;
-import bank.Client;
 import bank.PaySystem;
 
 public class SomeCard extends AbstractCard {
 
-    public SomeCard(PaySystem paySystem, long cardNumber, BankAccount bankAccount) {
-        super(paySystem, cardNumber, bankAccount);
+    public SomeCard(PaySystem paySystem, long cardNumber, BankAccount bankAccount, int cvv, int pin) throws CardImplementationException {
+        super(paySystem, cardNumber, bankAccount, cvv, pin);
     }
 
-    public SomeCard(BankAccount bankAccount) {
-        this(Bank.getPaySystem(), Bank.getCardNum(), bankAccount);
+    public SomeCard(BankAccount bankAccount, int cvv, int pin) throws CardImplementationException {
+        this(Bank.getPaySystem(), Bank.getCardNum(), bankAccount, cvv, pin);
     }
 
     @Override
