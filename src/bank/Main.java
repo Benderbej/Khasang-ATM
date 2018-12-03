@@ -1,6 +1,7 @@
 package bank;
 
 import bankclient.ATM;
+import bankclient.InternetShop;
 import card.Card;
 import card.CardImplementationException;
 import card.SomeCard;
@@ -19,7 +20,7 @@ public class Main {
         Card card = new SomeCard(account, 233, "3333");
         client = bank.firstServiceClient(client, card, account);
 
-        //hashCode() и equals() переопределены в bank.Client(сначала client содержал и объекты BankAccount и Card и хешкод и equals были определены и там) что позволяет нам:
+        //hashCode() и equals() переопределены в Client(сначала client содержал и объекты BankAccount и Card и хешкод и equals были определены и там) что позволяет нам:
         //где-то в банкомате... создать новый экземпляр, идентичный
         Client theSameClient = new Client("viktor_semenovich");
         BankAccount account2 = new BankAccount();
@@ -42,15 +43,25 @@ public class Main {
         } else {
             System.out.println("client not found");
         }
+
+
+        //InternetShop shop = new InternetShop();
+        //shop.processStartCard(bank.getBasicCard(theSameClient));
+        //shop.withdrawCash(new BigDecimal("1030"));
+        //shop.processEndCard();
+
+
     }
 }
 /*
 На повторение коллекций:
 
-8. Добавьте хранение и проверку pin-кода, чтобы операции с картой были защищены предварительным вводом пина.
 
 
 9. (*) Наряду с atm.ATM добавьте класс InternetShop, который тоже может работать с картой, но вместо pin-кода использует для подтверждения CVV-код и срок действия.
+
+
+
 10. (*** на проектирование) Добавьте эмуляцию режима 3d-secure, когда пользователю перед списанием с карты отправляется СМС с кодом подтверждения.
 Прочитайте детальнее, как устроен LinkedList: https://habrahabr.ru/post/127864/
 =======================================

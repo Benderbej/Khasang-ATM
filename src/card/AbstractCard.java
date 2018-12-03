@@ -13,18 +13,18 @@ public abstract class AbstractCard implements Card {
     private int cvv;
     private String pin;
 
-    public abstract void insert();
-
-    public abstract void eject();
-
     private AbstractCard() {};//чтобы неповадно было без аргументов создавать!!!
 
     public AbstractCard(PaySystem paySystem, long cardNumber, BankAccount bankAccount, int cvv, String pin) throws CardImplementationException {
+        init(paySystem, cardNumber, bankAccount);
+        initCvv(cvv);
+        initPin(pin);
+    }
+
+    private void init(PaySystem paySystem, long cardNumber, BankAccount bankAccount){
         this.paySytem = paySystem;
         this.cardNumber = cardNumber;
         this.bankAccount = bankAccount;
-        initCvv(cvv);
-        initPin(pin);
     }
 
     private void initCvv(int cvv) {

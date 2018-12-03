@@ -1,9 +1,17 @@
 package bankclient;
 
+import card.Card;
+
+import java.math.BigDecimal;
+
 public interface ProcessCardAble {
 
-    boolean put(int i);
+    void withdraw(BigDecimal b);
 
-    boolean withdraw(int i);
+    void processStartCard(Card card);
+
+    void processStopCard();
+
+    boolean checkValid();
 
 }

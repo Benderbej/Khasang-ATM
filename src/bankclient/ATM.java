@@ -6,10 +6,32 @@ import card.Card;
 import java.math.BigDecimal;
 import java.util.Scanner;
 
-public class ATM implements Checkable {
+public class ATM implements ProcessCardAble {
 
     private Card currentCard;
     private String attemptPin;
+    private Scanner scanner;
+
+    @Override
+    public void withdraw(BigDecimal b) {
+        withdrawCash(b);
+    }
+
+    @Override
+    public void processStartCard(Card card) {
+        processInsertCard(card);
+    }
+
+    @Override
+    public void processStopCard() {
+        processEjectCard();
+    }
+
+    @Override
+    public boolean checkValid() {
+        System.out.println();
+        return currentCard.checkValidByPin(attemptPin);
+    }
 
     public boolean processInsertCard(Card card) {
         boolean result = false;
@@ -18,7 +40,6 @@ public class ATM implements Checkable {
             setAttemptPin();
             if(checkValid()) {
                 System.out.println("банкомат глотает карту(банкомат не выплюнул)");
-                currentCard.insert();
                 result = true;
             } else {
                 System.out.println("неверный пин-код! банкомат выплевывает карту");
@@ -30,9 +51,9 @@ public class ATM implements Checkable {
 
     public void processEjectCard() {
         if (currentCard != null) {
-            currentCard.eject();
             currentCard = null;
             System.out.println("карта вынута из банкомата и находится вас в руках! ждем вас снова!");
+            scanner.close();
         }
     }
 
@@ -80,19 +101,11 @@ public class ATM implements Checkable {
         return false;
     }
 
-    @Override
-    public boolean checkValid() {
-        System.out.println();
-        return currentCard.checkValidByPin(attemptPin);
-    }
-
     private void setAttemptPin() {
+        scanner = new Scanner(System.in);
         System.out.println("введите PIN-код, пожалуйста");
-        Scanner scanner = new Scanner(System.in);
         attemptPin = scanner.nextLine();
-        //System.in.close();
     }
-
 
     public int getCurrentPin(int currentPin) {
         return currentPin;
