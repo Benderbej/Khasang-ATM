@@ -11,7 +11,7 @@ public abstract class AbstractCard implements Card {
     private long cardNumber;
     private BankAccount bankAccount;
     private int cvv;
-    private int pin;
+    private String pin;
 
     public abstract void insert();
 
@@ -19,7 +19,7 @@ public abstract class AbstractCard implements Card {
 
     private AbstractCard() {};//чтобы неповадно было без аргументов создавать!!!
 
-    public AbstractCard(PaySystem paySystem, long cardNumber, BankAccount bankAccount, int cvv, int pin) throws CardImplementationException {
+    public AbstractCard(PaySystem paySystem, long cardNumber, BankAccount bankAccount, int cvv, String pin) throws CardImplementationException {
         this.paySytem = paySystem;
         this.cardNumber = cardNumber;
         this.bankAccount = bankAccount;
@@ -28,7 +28,7 @@ public abstract class AbstractCard implements Card {
     }
 
     private void initCvv(int cvv) {
-        if (Integer.toString(cvv).length()!=3){
+        if (String.valueOf(cvv).length()!=3){
             try {
                 throw new Exception("setCvv() in Card Interface is not correctly implemented");//насколько правомочна такая конструкция?
             } catch (Exception e) {
@@ -38,18 +38,18 @@ public abstract class AbstractCard implements Card {
         this.cvv = cvv;
     }
 
-    private void initPin(int pin) throws CardImplementationException {
-        if (Integer.toString(pin).length()!=4){throw new CardImplementationException("setPin() in Card Interface is not correctly implemented");}//здесь сделал немного по-другому, в интерфейсе будет видно что метод может выкинуть исключение
+    private void initPin(String pin) throws CardImplementationException {
+        if (pin.length()!=4){throw new CardImplementationException("setPin() in Card Interface is not correctly implemented");}//здесь сделал немного по-другому, в интерфейсе будет видно что метод может выкинуть исключение
         this.pin = pin;
     }
 
     public boolean checkValidByCvv(int cvv) {
-        boolean res = (cvv == this.getCvv()) ? true : false;
+        boolean res = (cvv == (getCvv())) ? true : false;
         return res;
     }
 
-    public boolean checkValidByPin(int pin) {
-        boolean res = (pin == this.getPin()) ? true : false;
+    public boolean checkValidByPin(String pin) {
+        boolean res = (pin.equals(this.getPin())) ? true : false;
         return res;
     }
 
@@ -62,15 +62,15 @@ public abstract class AbstractCard implements Card {
     }
 
     public int getCvv() {
-        return 0;
+        return cvv;
     }
 
-    private void setPin(int pin) {
+    private void setPin(String pin) {
         this.pin = pin;
     }
 
-    public int getPin() {
-        return 0;
+    public String getPin() {
+        return pin;
     }
 
     @Override

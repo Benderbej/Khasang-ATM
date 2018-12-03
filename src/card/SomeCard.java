@@ -6,11 +6,11 @@ import bank.PaySystem;
 
 public class SomeCard extends AbstractCard {
 
-    public SomeCard(PaySystem paySystem, long cardNumber, BankAccount bankAccount, int cvv, int pin) throws CardImplementationException {
+    public SomeCard(PaySystem paySystem, long cardNumber, BankAccount bankAccount, int cvv, String pin) throws CardImplementationException {
         super(paySystem, cardNumber, bankAccount, cvv, pin);
     }
 
-    public SomeCard(BankAccount bankAccount, int cvv, int pin) throws CardImplementationException {
+    public SomeCard(BankAccount bankAccount, int cvv, String pin) throws CardImplementationException {
         this(Bank.getPaySystem(), Bank.getCardNum(), bankAccount, cvv, pin);
     }
 

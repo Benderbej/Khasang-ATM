@@ -4,47 +4,57 @@ import bank.Bank;
 import card.Card;
 
 import java.math.BigDecimal;
+import java.util.Scanner;
 
 public class ATM implements Checkable {
 
     private Card currentCard;
-    private int currentPin;
+    private String attemptPin;
 
     public boolean processInsertCard(Card card) {
         boolean result = false;
         if(!checkIfNotRepeatInsertion()){
-            System.out.println("банкомат глотает карту(банкомат не выплюнул)");
             setCurrentCard(card);
-            currentCard.insert();
-            result = true;
+            setAttemptPin();
+            if(checkValid()) {
+                System.out.println("банкомат глотает карту(банкомат не выплюнул)");
+                currentCard.insert();
+                result = true;
+            } else {
+                System.out.println("неверный пин-код! банкомат выплевывает карту");
+                setCurrentCard(null);
+            }
         } else {System.out.println("банкомат выплевывает карту");}
         return result;
     }
 
     public void processEjectCard() {
-        currentCard.eject();
-        currentCard = null;
-        System.out.println("карта вынута из банкомата и находится вас в руках! ждем вас снова!");
-    };
+        if (currentCard != null) {
+            currentCard.eject();
+            currentCard = null;
+            System.out.println("карта вынута из банкомата и находится вас в руках! ждем вас снова!");
+        }
+    }
 
     public void getBalance() {
-        if(currentCard == null){
-            System.out.println("вставьте карту");
-            return;
+        if (currentCard != null) {
+            System.out.println("ваш баланс: " + currentCard.getBalance());
         }
-        System.out.println("ваш баланс: "+ currentCard.getBalance());
     }
 
     public void putCash(BigDecimal cash) {
-        System.out.println("");
-        currentCard.setBalance(currentCard.getBalance().add(cash));
-        System.out.println("Сумма "+cash+" зачислена на счет");
+        if(currentCard != null) {
+            currentCard.setBalance(currentCard.getBalance().add(cash));
+            System.out.println("Сумма " + cash + " зачислена на счет");
+        }
     }
 
     public void withdrawCash(BigDecimal cashQuery) {
-        if (haveEnoughCash(cashQuery)){
-            currentCard.setBalance(currentCard.getBalance().subtract(cashQuery));
-            System.out.println("Сумма "+cashQuery+ "списана со счета");
+        if (currentCard != null) {
+            if (haveEnoughCash(cashQuery)) {
+                currentCard.setBalance(currentCard.getBalance().subtract(cashQuery));
+                System.out.println("Сумма " + cashQuery + "списана со счета");
+            }
         }
     }
 
@@ -72,10 +82,19 @@ public class ATM implements Checkable {
 
     @Override
     public boolean checkValid() {
-        return currentCard.checkValidByPin(currentPin);
+        System.out.println();
+        return currentCard.checkValidByPin(attemptPin);
     }
 
-    public void setCurrentPin(int currentPin) {
-        this.currentPin = currentPin;
+    private void setAttemptPin() {
+        System.out.println("введите PIN-код, пожалуйста");
+        Scanner scanner = new Scanner(System.in);
+        attemptPin = scanner.nextLine();
+        //System.in.close();
+    }
+
+
+    public int getCurrentPin(int currentPin) {
+        return currentPin;
     }
 }

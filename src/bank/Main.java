@@ -16,14 +16,14 @@ public class Main {
         //где-то в банке...
         Client client = new Client("viktor_semenovich");
         BankAccount account = new BankAccount();
-        Card card = new SomeCard(account, 233, 3333);
+        Card card = new SomeCard(account, 233, "3333");
         client = bank.firstServiceClient(client, card, account);
 
         //hashCode() и equals() переопределены в bank.Client(сначала client содержал и объекты BankAccount и Card и хешкод и equals были определены и там) что позволяет нам:
         //где-то в банкомате... создать новый экземпляр, идентичный
         Client theSameClient = new Client("viktor_semenovich");
         BankAccount account2 = new BankAccount();
-        Card card2 = new SomeCard(account, 233, 3333);
+        Card card2 = new SomeCard(account, 233, "3333");
         theSameClient = bank.firstServiceClient(theSameClient, card2, account2);
 
         System.out.println("client hash"+client.hashCode());//возвращает hash 891650685
