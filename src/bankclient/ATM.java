@@ -1,11 +1,11 @@
-package atm;
+package bankclient;
 
 import bank.Bank;
 import card.Card;
 
 import java.math.BigDecimal;
 
-public class ATM {
+public class ATM implements Checkable {
 
     private Bank bank;
     private Card currentCard;
@@ -13,14 +13,16 @@ public class ATM {
     public boolean processInsertCard(Card card) {
         boolean result = false;
         if(!checkIfNotRepeatInsertion()){
-            System.out.println("карта принята(банкомат не выплюнул)");
+            System.out.println("банкомат глотает карту(банкомат не выплюнул)");
             setCurrentCard(card);
+            currentCard.insert();
             result = true;
         } else {System.out.println("банкомат выплевывает карту");}
         return result;
     }
 
     public void processEjectCard() {
+        currentCard.eject();
         currentCard = null;
         System.out.println("карта вынута из банкомата и находится вас в руках! ждем вас снова!");
     };
@@ -52,7 +54,6 @@ public class ATM {
 
     private void setCurrentCard(Card currentCard) {
         this.currentCard = currentCard;
-        System.out.println("карта в банкомате! наш банкомат без пинкода приветствует вас!");
     }
 
     private boolean haveEnoughCash(BigDecimal cashQuery) {
@@ -77,5 +78,10 @@ public class ATM {
 
     public void setBank(Bank bank) {
         this.bank = bank;
+    }
+
+    @Override
+    public boolean checkValid() {
+        return false;
     }
 }

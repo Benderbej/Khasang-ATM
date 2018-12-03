@@ -23,12 +23,38 @@ public abstract class AbstractCard implements Card {
         this.bankAccount = bankAccount;
     }
 
+    public boolean checkValidByCvv(int cvv) {
+        boolean res = (cvv == this.getCvv()) ? true : false;
+        return res;
+    };
+
+    public boolean checkValidByPin(int pin) {
+        boolean res = (pin == this.getPin()) ? true : false;
+        return res;
+    };
+
     public BigDecimal getBalance() {
         return bankAccount.getBalance();
     }
 
     public void setBalance(BigDecimal bigDecimal) {
         bankAccount.setBalance(bigDecimal);
+    }
+
+    int setCvv() {
+        return 0;
+    }
+
+    public int getCvv() {
+        return 0;
+    }
+
+    int setPin() {
+        return 0;
+    }
+
+    public int getPin() {
+        return 0;
     }
 
     @Override

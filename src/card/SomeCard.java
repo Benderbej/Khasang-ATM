@@ -11,13 +11,13 @@ public class SomeCard extends AbstractCard {
         super(paySystem, cardNumber, bankAccount);
     }
 
-    public SomeCard(Client client, BankAccount bankAccount) {
+    public SomeCard(BankAccount bankAccount) {
         this(Bank.getPaySystem(), Bank.getCardNum(), bankAccount);
     }
 
     @Override
     public void insert() {
-        System.out.println("какая-то карточка из недорогого пластика с шумом въезжает в специальный лоток банкомата... проверяется на подлинность с помощью специальной технологии...");
+        System.out.println("какая-то карточка из недорогого пластика с шумом въезжает в специальный лоток банкомата... видимо проверяется на подлинность с помощью специальной технологии... слышится серия технических звуков...");
     }
 
     @Override
