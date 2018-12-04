@@ -1,5 +1,7 @@
 package card;
 
+import bank.Bank;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -24,4 +26,8 @@ public interface Card {
     Date getExpirationDate();
 
     boolean checkValidByDate(Date date);
+
+    void setBalance2(Bank bank, BigDecimal bigDecimal);
+
+    BigDecimal getBalance2(Bank bank);
 }

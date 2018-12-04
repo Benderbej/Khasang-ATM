@@ -85,6 +85,11 @@ public abstract class AbstractCard implements Card {
         bankAccount.setBalance(bigDecimal);
     }
 
+
+
+
+
+
     public BigDecimal getBalance2(Bank bank) {
         return bankAccount.getBalance();
     }
@@ -92,7 +97,6 @@ public abstract class AbstractCard implements Card {
     public void setBalance2(Bank bank, BigDecimal bigDecimal) {
         bankAccount.setBalance(bigDecimal);
     }
-
 
 
 
