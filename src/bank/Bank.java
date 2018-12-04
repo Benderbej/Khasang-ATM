@@ -83,18 +83,9 @@ public class Bank {
 
     BankAccount getBasicAccount(Client client){
         return clientsBasicAccounts.get(client);
-    }
+    }//ищем основной счет
 
-    Card getBasicCard(Client client){
-        System.out.println("==========");
-        System.out.println(client);
-        System.out.println(getBasicAccount(client));
-        System.out.println(getBasicAccount(client).hashCode());
-        System.out.println(accountsCards.get(getBasicAccount(client)));
-        System.out.println(accountsCards);
-        System.out.println("==========");
-
-
+    Card getBasicCard(Client client){//по основному счету ищем карту
         return accountsCards.get(getBasicAccount(client));
     }
 

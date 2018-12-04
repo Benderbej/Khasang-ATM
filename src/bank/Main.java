@@ -40,28 +40,18 @@ public class Main {
 
         System.out.println("client hash"+client.hashCode());//возвращает hash 891650685
         System.out.println("theSameClient hash"+theSameClient.hashCode());//возвращает такой же хеш 891650685
-        System.out.println("account.hashCode()="+account.hashCode());
-        System.out.println("account2.hashCode()="+account2.hashCode());
 
         if ( bank.getClients().contains(theSameClient)) {
             ATM atm = new ATM(bank);
             atm.processInsertCard(bank.getBasicCard(theSameClient));
             atm.getBalance();
-            System.out.println("1 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient) + " atm.getCurrentCard() " + atm.getCurrentCard());
-            System.out.println("1 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient).hashCode() + " atm.getCurrentCard() " + atm.getCurrentCard().hashCode());
-            System.out.println(bank.getBasicCard(theSameClient) == atm.getCurrentCard());
             atm.putCash(new BigDecimal("20500"));
-            System.out.println("2 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient) + " atm.getCurrentCard() " + atm.getCurrentCard());
-            System.out.println(bank.getBasicCard(theSameClient) == atm.getCurrentCard());
-            System.out.println("2 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient).hashCode() + " atm.getCurrentCard() " + atm.getCurrentCard().hashCode());
 
             atm.getBalance();
             atm.withdrawCash(new BigDecimal("240"));
             atm.getBalance();
             atm.processInsertCard(bank.getBasicCard(theSameClient));
             atm.processEjectCard();
-            System.out.println("6 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient));
-
             //пользуемся интерфейсом
             ProcessCardAble shop = new InternetShop(bank);
             Card c = bank.getBasicCard(theSameClient);
@@ -75,14 +65,6 @@ public class Main {
         }
 
 
-        /*
-        String dt = "2008-01-01";  // Start date
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar c = Calendar.getInstance();
-        c.setTime(sdf.parse(dt));
-        c.add(Calendar.DATE, 1);  // number of days to add
-        dt = sdf.format(c.getTime());  // dt is now the new date
-        */
         scanner.close();
     }
 }

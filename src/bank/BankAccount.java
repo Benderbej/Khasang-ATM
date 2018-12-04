@@ -28,14 +28,11 @@ public class BankAccount {
 
         BankAccount that = (BankAccount) o;
 
-        if (number != that.number) return false;
-        return balance != null ? balance.equals(that.balance) : that.balance == null;
+        return number == that.number;
     }
 
     @Override
-    public int hashCode() {
-        int result = (int) (number ^ (number >>> 32));
-        result = 31 * result + (balance != null ? balance.hashCode() : 0);
-        return result;
+    public int hashCode() {//НИКАКОГО БАЛАНСА НЕ ДОЛЖНО БЫТЬ В ХЕШ-ФУНКЦИИ!!! баланс - параметр изменяемый, а сами счета у нас кое где играют роль ключей в HashMap
+        return (int) (number ^ (number >>> 32));
     }
 }

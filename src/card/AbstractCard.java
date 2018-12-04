@@ -65,8 +65,6 @@ public abstract class AbstractCard implements Card {
     }
 
 
-
-
     public int getCvv() {
         return cvv;
     }
