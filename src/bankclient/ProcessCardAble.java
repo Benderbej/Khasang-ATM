@@ -13,5 +13,4 @@ public interface ProcessCardAble {
     void processStopCard();
 
     boolean checkValid();
-
 }

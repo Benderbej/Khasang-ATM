@@ -1,16 +1,23 @@
 package bank;
 
 import bankclient.ATM;
+import bankclient.BankClient;
 import bankclient.InternetShop;
+import bankclient.ProcessCardAble;
 import card.Card;
 import card.CardImplementationException;
 import card.SomeCard;
 
 import java.math.BigDecimal;
+import java.util.Scanner;
 
 public class Main {
 
+    public static Scanner scanner;
+
     public static void main(String[] args) throws CardImplementationException {
+        scanner = new Scanner(System.in);
+
         //парень пришел в банк и оформил карточку
         Bank bank = new Bank();
 
@@ -30,38 +37,50 @@ public class Main {
         System.out.println("client hash"+client.hashCode());//возвращает hash 891650685
         System.out.println("theSameClient hash"+theSameClient.hashCode());//возвращает такой же хеш 891650685
 
-        if ( bank.getClients().contains(theSameClient)){
-            ATM atm = new ATM();
+        if ( bank.getClients().contains(theSameClient)) {
+            ATM atm = new ATM(bank);
             atm.processInsertCard(bank.getBasicCard(theSameClient));
+            System.out.println("1 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient));
             atm.getBalance();
+            System.out.println("2 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient));
             atm.putCash(new BigDecimal("20500"));
+            System.out.println("3 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient));
             atm.getBalance();
+            System.out.println("4 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient));
             atm.withdrawCash(new BigDecimal("240"));
+            System.out.println("5 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient));
             atm.getBalance();
             atm.processInsertCard(bank.getBasicCard(theSameClient));
             atm.processEjectCard();
+            System.out.println("6 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient));
+
+            //пользуемся интерфейсом
+            ProcessCardAble shop = new InternetShop();
+            Card c = bank.getBasicCard(theSameClient);
+            System.out.println(card2);
+            shop.processStartCard(card2);
+            shop.withdraw(new BigDecimal("1030"));
+            shop.processStopCard();
+
         } else {
             System.out.println("client not found");
         }
 
 
-        //InternetShop shop = new InternetShop();
-        //shop.processStartCard(bank.getBasicCard(theSameClient));
-        //shop.withdrawCash(new BigDecimal("1030"));
-        //shop.processEndCard();
-
-
+        /*
+        String dt = "2008-01-01";  // Start date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        c.setTime(sdf.parse(dt));
+        c.add(Calendar.DATE, 1);  // number of days to add
+        dt = sdf.format(c.getTime());  // dt is now the new date
+        */
+        scanner.close();
     }
 }
 /*
 На повторение коллекций:
-
-
-
 9. (*) Наряду с atm.ATM добавьте класс InternetShop, который тоже может работать с картой, но вместо pin-кода использует для подтверждения CVV-код и срок действия.
-
-
-
 10. (*** на проектирование) Добавьте эмуляцию режима 3d-secure, когда пользователю перед списанием с карты отправляется СМС с кодом подтверждения.
 Прочитайте детальнее, как устроен LinkedList: https://habrahabr.ru/post/127864/
 =======================================

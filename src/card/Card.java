@@ -1,11 +1,11 @@
 package card;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public interface Card {
 
     //boolean currentValidationPassed = false;//данные о последней валидации
-
     int DEFAULT_CVV  = 555;
     String DEFAULT_PIN = "0000";
 
@@ -21,4 +21,7 @@ public interface Card {
 
     String getPin();//заставляем сразу определять pin - насколько правомерен такой прием? так вообще делают? (setter не делаем чтобы была возможность сделать его private)
 
+    Date getExpirationDate();
+
+    boolean checkValidByDate(Date date);
 }

@@ -1,6 +1,7 @@
 package bankclient;
 
 import bank.Bank;
+import bank.Main;
 import card.Card;
 
 import java.math.BigDecimal;
@@ -10,7 +11,12 @@ public class ATM implements ProcessCardAble {
 
     private Card currentCard;
     private String attemptPin;
-    private Scanner scanner;
+    private Bank bank;
+    //private Scanner scanner;
+
+    public ATM(Bank bank){
+        this.bank = bank;
+    }
 
     @Override
     public void withdraw(BigDecimal b) {
@@ -45,7 +51,7 @@ public class ATM implements ProcessCardAble {
                 System.out.println("неверный пин-код! банкомат выплевывает карту");
                 setCurrentCard(null);
             }
-        } else {System.out.println("банкомат выплевывает карту");}
+        } else {System.out.println("в банкомате уже присутствует карта! - банкомат выплевывает карту");}
         return result;
     }
 
@@ -53,31 +59,41 @@ public class ATM implements ProcessCardAble {
         if (currentCard != null) {
             currentCard = null;
             System.out.println("карта вынута из банкомата и находится вас в руках! ждем вас снова!");
-            scanner.close();
         }
     }
 
     public void getBalance() {
         if (currentCard != null) {
-            System.out.println("ваш баланс: " + currentCard.getBalance());
+            System.out.println("ваш баланс: " + getCurrentCardBalance());
         }
     }
 
     public void putCash(BigDecimal cash) {
         if(currentCard != null) {
-            currentCard.setBalance(currentCard.getBalance().add(cash));
+            setCurrentCardBalance(getCurrentCardBalance().add(cash));
             System.out.println("Сумма " + cash + " зачислена на счет");
         }
     }
 
     public void withdrawCash(BigDecimal cashQuery) {
         if (currentCard != null) {
-            if (haveEnoughCash(cashQuery)) {
-                currentCard.setBalance(currentCard.getBalance().subtract(cashQuery));
+            if (haveEnoughSumm(cashQuery)) {
+                setCurrentCardBalance(getCurrentCardBalance().subtract(cashQuery));
+                //System.out.println("withdrawCash() currentCard="+currentCard);
                 System.out.println("Сумма " + cashQuery + "списана со счета");
             }
         }
     }
+
+    private BigDecimal getCurrentCardBalance() {
+        return currentCard.getBalance();
+    }
+
+    private void setCurrentCardBalance(BigDecimal bigDecimal) {
+        currentCard.setBalance(bigDecimal);
+    }
+
+
 
     private Card getCurrentCard() {
         return currentCard;
@@ -87,8 +103,8 @@ public class ATM implements ProcessCardAble {
         this.currentCard = currentCard;
     }
 
-    private boolean haveEnoughCash(BigDecimal cashQuery) {
-        if (cashQuery.compareTo(getCurrentCard().getBalance()) < 0){
+    private boolean haveEnoughSumm(BigDecimal cashQuery) {
+        if (cashQuery.compareTo(getCurrentCardBalance()) < 0){
             System.out.println("успешно, сумма "+cashQuery+" будет списана со счета");
             return true;
         }
@@ -102,7 +118,7 @@ public class ATM implements ProcessCardAble {
     }
 
     private void setAttemptPin() {
-        scanner = new Scanner(System.in);
+        Scanner scanner = Main.scanner;
         System.out.println("введите PIN-код, пожалуйста");
         attemptPin = scanner.nextLine();
     }

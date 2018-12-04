@@ -1,5 +1,6 @@
 package card;
 
+import bank.Bank;
 import bank.BankAccount;
 import bank.PaySystem;
 
@@ -21,11 +22,34 @@ public abstract class AbstractCard implements Card {
         initPin(pin);
     }
 
-    private void init(PaySystem paySystem, long cardNumber, BankAccount bankAccount){
+    private void init(PaySystem paySystem, long cardNumber, BankAccount bankAccount) {
         this.paySytem = paySystem;
         this.cardNumber = cardNumber;
         this.bankAccount = bankAccount;
     }
+
+
+
+
+
+
+    public AbstractCard(PaySystem paySystem, long cardNumber, int cvv, String pin) throws CardImplementationException {
+        init(paySystem, cardNumber, bankAccount);
+        initCvv(cvv);
+        initPin(pin);
+    }
+
+    private void init(PaySystem paySystem, long cardNumber) {
+        this.paySytem = paySystem;
+        this.cardNumber = cardNumber;
+    }
+
+
+
+
+
+
+
 
     private void initCvv(int cvv) {
         if (String.valueOf(cvv).length()!=3){
@@ -60,6 +84,19 @@ public abstract class AbstractCard implements Card {
     public void setBalance(BigDecimal bigDecimal) {
         bankAccount.setBalance(bigDecimal);
     }
+
+    public BigDecimal getBalance2(Bank bank) {
+        return bankAccount.getBalance();
+    }
+
+    public void setBalance2(Bank bank, BigDecimal bigDecimal) {
+        bankAccount.setBalance(bigDecimal);
+    }
+
+
+
+
+
 
     public int getCvv() {
         return cvv;
