@@ -1,5 +1,6 @@
 package bankclient;
 
+import bank.Bank;
 import bank.Main;
 import card.Card;
 
@@ -13,12 +14,17 @@ public class InternetShop implements ProcessCardAble{
     private int attemptCvv;
     private Date attemptDate;
     private Scanner scanner;
+    Bank bank;
+
+    public InternetShop(Bank bank){
+        this.bank = bank;
+    }
 
     @Override
     public void withdraw(BigDecimal query) {
         if (currentCard != null) {
             if (haveEnoughSumm(query)) {
-                currentCard.setBalance(currentCard.getBalance().subtract(query));
+                setCurrentCardBalance(getCurrentCardBalance().subtract(query));
                 System.out.println("Сумма " + query + "списана со счета");
             }
         }
@@ -55,7 +61,7 @@ public class InternetShop implements ProcessCardAble{
     }
 
     private boolean haveEnoughSumm(BigDecimal cashQuery) {
-        if (cashQuery.compareTo(getCurrentCard().getBalance()) < 0){
+        if (cashQuery.compareTo(getCurrentCardBalance()) < 0){
             System.out.println("успешно, сумма "+cashQuery+" будет списана со счета");
             return true;
         }
@@ -88,4 +94,15 @@ public class InternetShop implements ProcessCardAble{
         System.out.println("currentCard="+currentCard);
         this.currentCard = currentCard;
     }
+
+    private BigDecimal getCurrentCardBalance() {
+        return currentCard.getBalance(bank);
+    }
+
+    private void setCurrentCardBalance(BigDecimal bigDecimal) {
+        currentCard.setBalance(bank, bigDecimal);
+    }
+
+
+
 }

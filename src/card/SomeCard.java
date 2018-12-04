@@ -12,19 +12,21 @@ public class SomeCard extends AbstractCard {
 
     private Date date;
 
-    public SomeCard(PaySystem paySystem, long cardNumber, BankAccount bankAccount, int cvv, String pin) throws CardImplementationException {
-        super(paySystem, cardNumber, bankAccount, cvv, pin);
+    public SomeCard(PaySystem paySystem, long cardNumber, int cvv, String pin) throws CardImplementationException {
+        super(paySystem, cardNumber, cvv, pin);
     }
 
-    public SomeCard(BankAccount bankAccount, int cvv, String pin) throws CardImplementationException {
-        this(Bank.getPaySystem(), Bank.getCardNum(), bankAccount, cvv, pin);
+    public SomeCard(int cvv, String pin, Date date) throws CardImplementationException {
+        this(Bank.getPaySystem(), Bank.getCardNum(), cvv, pin);
+        this.date = addThreeYearsToExpiration(date);
+    }
+
+    public SomeCard(int cvv, String pin) throws CardImplementationException {
+        this(Bank.getPaySystem(), Bank.getCardNum(), cvv, pin);
         date = addThreeYearsToExpiration(new Date());
     }
 
-    public SomeCard(BankAccount bankAccount, int cvv, String pin, Date date) throws CardImplementationException {
-        this(Bank.getPaySystem(), Bank.getCardNum(), bankAccount, cvv, pin);
-        this.date = addThreeYearsToExpiration(date);
-    }
+
 
     @Override
     public Date getExpirationDate() {

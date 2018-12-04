@@ -86,11 +86,11 @@ public class ATM implements ProcessCardAble {
     }
 
     private BigDecimal getCurrentCardBalance() {
-        return currentCard.getBalance2(bank);
+        return currentCard.getBalance(bank);
     }
 
     private void setCurrentCardBalance(BigDecimal bigDecimal) {
-        currentCard.setBalance2(bank, bigDecimal);
+        currentCard.setBalance(bank, bigDecimal);
     }
 
 

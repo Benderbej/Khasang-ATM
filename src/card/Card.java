@@ -15,10 +15,6 @@ public interface Card {
 
     boolean checkValidByPin(String pin);
 
-    BigDecimal getBalance();
-
-    void setBalance(BigDecimal bigDecimal);
-
     int getCvv();//заставляем сразу определять cvv - насколько правомерен такой прием? так вообще делают? (setter не делаем чтобы была возможность сделать его private)
 
     String getPin();//заставляем сразу определять pin - насколько правомерен такой прием? так вообще делают? (setter не делаем чтобы была возможность сделать его private)
@@ -27,7 +23,7 @@ public interface Card {
 
     boolean checkValidByDate(Date date);
 
-    void setBalance2(Bank bank, BigDecimal bigDecimal);
+    void setBalance(Bank bank, BigDecimal bigDecimal);
 
-    BigDecimal getBalance2(Bank bank);
+    BigDecimal getBalance(Bank bank);
 }

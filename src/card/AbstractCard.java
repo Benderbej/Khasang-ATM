@@ -10,31 +10,13 @@ public abstract class AbstractCard implements Card {
 
     private PaySystem paySytem;
     private long cardNumber;
-    private BankAccount bankAccount;
     private int cvv;
     private String pin;
 
     private AbstractCard() {};//чтобы неповадно было без аргументов создавать!!!
 
-    public AbstractCard(PaySystem paySystem, long cardNumber, BankAccount bankAccount, int cvv, String pin) throws CardImplementationException {
-        init(paySystem, cardNumber, bankAccount);
-        initCvv(cvv);
-        initPin(pin);
-    }
-
-    private void init(PaySystem paySystem, long cardNumber, BankAccount bankAccount) {
-        this.paySytem = paySystem;
-        this.cardNumber = cardNumber;
-        this.bankAccount = bankAccount;
-    }
-
-
-
-
-
-
     public AbstractCard(PaySystem paySystem, long cardNumber, int cvv, String pin) throws CardImplementationException {
-        init(paySystem, cardNumber, bankAccount);
+        init(paySystem, cardNumber);
         initCvv(cvv);
         initPin(pin);
     }
@@ -43,13 +25,6 @@ public abstract class AbstractCard implements Card {
         this.paySytem = paySystem;
         this.cardNumber = cardNumber;
     }
-
-
-
-
-
-
-
 
     private void initCvv(int cvv) {
         if (String.valueOf(cvv).length()!=3){
@@ -77,27 +52,16 @@ public abstract class AbstractCard implements Card {
         return res;
     }
 
-    public BigDecimal getBalance() {
-        return bankAccount.getBalance();
-    }
-
-    public void setBalance(BigDecimal bigDecimal) {
-        bankAccount.setBalance(bigDecimal);
-    }
 
 
 
-
-
-
-    public BigDecimal getBalance2(Bank bank) {
+    public BigDecimal getBalance(Bank bank) {
         return bank.getCardAccount(this).getBalance();
     }
 
-    public void setBalance2(Bank bank, BigDecimal bigDecimal) {
+    public void setBalance(Bank bank, BigDecimal bigDecimal) {
         bank.getCardAccount(this).setBalance(bigDecimal);
     }
-
 
 
 
@@ -114,23 +78,8 @@ public abstract class AbstractCard implements Card {
         return pin;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        AbstractCard that = (AbstractCard) o;
 
-        if (cardNumber != that.cardNumber) return false;
-        if (paySytem != null ? !paySytem.equals(that.paySytem) : that.paySytem != null) return false;
-        return bankAccount != null ? bankAccount.equals(that.bankAccount) : that.bankAccount == null;
-    }
 
-    @Override
-    public int hashCode() {
-        int result = paySytem != null ? paySytem.hashCode() : 0;
-        result = 31 * result + (int) (cardNumber ^ (cardNumber >>> 32));
-        result = 31 * result + (bankAccount != null ? bankAccount.hashCode() : 0);
-        return result;
-    }
+
 }
