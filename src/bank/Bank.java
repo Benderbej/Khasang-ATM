@@ -1,5 +1,6 @@
 package bank;
 
+import bankclient.BankClient;
 import card.Card;
 import card.SomeCard;
 
@@ -89,4 +90,7 @@ public class Bank {
         return accountsCards.get(getBasicAccount(client));
     }
 
+    public BankAccount getCardAccount(Card card){
+        return cardsAccounts.get(card);
+    }
 }
