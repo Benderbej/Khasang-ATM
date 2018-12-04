@@ -37,6 +37,4 @@ public class Client {
     public Card getBasicCard(Bank bank){
         return bank.getBasicCard(this);
     }
-
-
 }

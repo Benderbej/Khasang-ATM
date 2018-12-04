@@ -95,7 +95,7 @@ public class ATM implements ProcessCardAble {
 
 
 
-    private Card getCurrentCard() {
+    public Card getCurrentCard() {
         return currentCard;
     }
 

@@ -60,7 +60,8 @@ public abstract class AbstractCard implements Card {
     }
 
     public void setBalance(Bank bank, BigDecimal bigDecimal) {
-        bank.getCardAccount(this).setBalance(bigDecimal);
+        bank.setAccountBalance(this, bigDecimal);
+        //bank.getCardAccount(this).setBalance(bigDecimal);
     }
 
 

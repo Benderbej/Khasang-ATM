@@ -1,13 +1,16 @@
 package bank;
 
 import java.math.BigDecimal;
+import java.util.Random;
 
 public class BankAccount {
 
+    private long number;
     private BigDecimal balance;
 
-    public BankAccount() {
-        this.balance = new BigDecimal("0");;
+    public BankAccount(long number) {
+        this.balance = new BigDecimal("0");
+        this.number = number;
     }
 
     public BigDecimal getBalance() {
@@ -23,13 +26,16 @@ public class BankAccount {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BankAccount account = (BankAccount) o;
+        BankAccount that = (BankAccount) o;
 
-        return balance != null ? balance.equals(account.balance) : account.balance == null;
+        if (number != that.number) return false;
+        return balance != null ? balance.equals(that.balance) : that.balance == null;
     }
 
     @Override
     public int hashCode() {
-        return balance != null ? balance.hashCode() : 0;
+        int result = (int) (number ^ (number >>> 32));
+        result = 31 * result + (balance != null ? balance.hashCode() : 0);
+        return result;
     }
 }

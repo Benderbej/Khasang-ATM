@@ -4,6 +4,7 @@ import bankclient.BankClient;
 import card.Card;
 import card.SomeCard;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -54,8 +55,6 @@ public class Bank {
     public Client firstServiceClient(Client client, Card card, BankAccount account){//обслуживание нового клиента по выпуску карты и созданию основного счета
         addClient(client);
 
-
-
         addAccount(client, account);
         clientsBasicAccounts.put(client, account);
         addCard(card);
@@ -87,10 +86,26 @@ public class Bank {
     }
 
     Card getBasicCard(Client client){
+        System.out.println("==========");
+        System.out.println(client);
+        System.out.println(getBasicAccount(client));
+        System.out.println(getBasicAccount(client).hashCode());
+        System.out.println(accountsCards.get(getBasicAccount(client)));
+        System.out.println(accountsCards);
+        System.out.println("==========");
+
+
         return accountsCards.get(getBasicAccount(client));
     }
 
-    public BankAccount getCardAccount(Card card){
+    public BankAccount getCardAccount(Card card){//инкапсулируем счета в банке, чтобы они не были доступны через карту!!!
         return cardsAccounts.get(card);
+    }
+
+    public boolean setAccountBalance(Card card, BigDecimal bigDecimal){//метод обновляет все коллекции класса чтобы не нарушить целостность данных
+        BankAccount bankAccount = cardsAccounts.get(card);
+        bankAccount.setBalance(bigDecimal);
+        cardsAccounts.put(card, bankAccount);
+        return true;
     }
 }

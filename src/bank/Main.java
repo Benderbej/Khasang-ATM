@@ -23,7 +23,7 @@ public class Main {
 
         //где-то в банке...
         Client client = new Client("viktor_semenovich");
-        BankAccount account = new BankAccount();
+        BankAccount account = new BankAccount(353453455355345l);
         //Card card = new SomeCard(account, 233, "3333");
         Card card = new SomeCard(233, "3333");
 
@@ -32,7 +32,7 @@ public class Main {
         //hashCode() и equals() переопределены в Client(сначала client содержал и объекты BankAccount и Card и хешкод и equals были определены и там) что позволяет нам:
         //где-то в банкомате... создать новый экземпляр, идентичный
         Client theSameClient = new Client("viktor_semenovich");
-        BankAccount account2 = new BankAccount();
+        BankAccount account2 = new BankAccount(353453455355345l);
         //Card card2 = new SomeCard(account, 233, "3333");
         Card card2 = new SomeCard(233, "3333");
 
@@ -40,19 +40,23 @@ public class Main {
 
         System.out.println("client hash"+client.hashCode());//возвращает hash 891650685
         System.out.println("theSameClient hash"+theSameClient.hashCode());//возвращает такой же хеш 891650685
+        System.out.println("account.hashCode()="+account.hashCode());
+        System.out.println("account2.hashCode()="+account2.hashCode());
 
         if ( bank.getClients().contains(theSameClient)) {
             ATM atm = new ATM(bank);
             atm.processInsertCard(bank.getBasicCard(theSameClient));
-            System.out.println("1 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient));
             atm.getBalance();
-            System.out.println("2 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient));
+            System.out.println("1 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient) + " atm.getCurrentCard() " + atm.getCurrentCard());
+            System.out.println("1 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient).hashCode() + " atm.getCurrentCard() " + atm.getCurrentCard().hashCode());
+            System.out.println(bank.getBasicCard(theSameClient) == atm.getCurrentCard());
             atm.putCash(new BigDecimal("20500"));
-            System.out.println("3 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient));
+            System.out.println("2 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient) + " atm.getCurrentCard() " + atm.getCurrentCard());
+            System.out.println(bank.getBasicCard(theSameClient) == atm.getCurrentCard());
+            System.out.println("2 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient).hashCode() + " atm.getCurrentCard() " + atm.getCurrentCard().hashCode());
+
             atm.getBalance();
-            System.out.println("4 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient));
             atm.withdrawCash(new BigDecimal("240"));
-            System.out.println("5 bank.getBasicCard(theSameClient)="+bank.getBasicCard(theSameClient));
             atm.getBalance();
             atm.processInsertCard(bank.getBasicCard(theSameClient));
             atm.processEjectCard();
