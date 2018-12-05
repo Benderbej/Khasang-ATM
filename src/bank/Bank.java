@@ -1,8 +1,6 @@
 package bank;
 
-import bankclient.BankClient;
 import card.Card;
-import card.SomeCard;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

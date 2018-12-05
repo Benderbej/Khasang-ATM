@@ -1,7 +1,6 @@
 package bank;
 
 import bankclient.ATM;
-import bankclient.BankClient;
 import bankclient.InternetShop;
 import bankclient.ProcessCardAble;
 import card.Card;
