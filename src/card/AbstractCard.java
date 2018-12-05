@@ -52,9 +52,6 @@ public abstract class AbstractCard implements Card {
         return res;
     }
 
-
-
-
     public BigDecimal getBalance(Bank bank) {
         return bank.getCardAccount(this).getBalance();
     }
@@ -63,7 +60,6 @@ public abstract class AbstractCard implements Card {
         bank.setAccountBalance(this, bigDecimal);
         //bank.getCardAccount(this).setBalance(bigDecimal);
     }
-
 
     public int getCvv() {
         return cvv;
@@ -77,8 +73,25 @@ public abstract class AbstractCard implements Card {
         return pin;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        AbstractCard that = (AbstractCard) o;
 
+        if (cardNumber != that.cardNumber) return false;
+        if (cvv != that.cvv) return false;
+        if (!paySytem.equals(that.paySytem)) return false;
+        return pin.equals(that.pin);
+    }
 
-
+    @Override
+    public int hashCode() {
+        int result = paySytem.hashCode();
+        result = 31 * result + (int) (cardNumber ^ (cardNumber >>> 32));
+        result = 31 * result + cvv;
+        result = 31 * result + pin.hashCode();
+        return result;
+    }
 }

@@ -35,7 +35,6 @@ public class ATM implements ProcessCardAble {
 
     @Override
     public boolean checkValid() {
-        System.out.println();
         return currentCard.checkValidByPin(attemptPin);
     }
 
@@ -93,8 +92,6 @@ public class ATM implements ProcessCardAble {
         currentCard.setBalance(bank, bigDecimal);
     }
 
-
-
     public Card getCurrentCard() {
         return currentCard;
     }
@@ -119,11 +116,12 @@ public class ATM implements ProcessCardAble {
 
     private void setAttemptPin() {
         Scanner scanner = Main.scanner;
-        System.out.println("введите PIN-код, пожалуйста");
+        System.out.println("введите PIN-код, пожалуйста [3333]");
         attemptPin = scanner.nextLine();
     }
 
     public int getCurrentPin(int currentPin) {
         return currentPin;
     }
+
 }

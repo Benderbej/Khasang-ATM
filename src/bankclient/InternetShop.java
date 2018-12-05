@@ -5,10 +5,14 @@ import bank.Main;
 import card.Card;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
-public class InternetShop implements ProcessCardAble{
+public class InternetShop implements ProcessCardAble, ThreeDSecure {
 
     private Card currentCard;
     private int attemptCvv;
@@ -16,16 +20,20 @@ public class InternetShop implements ProcessCardAble{
     private Scanner scanner;
     Bank bank;
 
-    public InternetShop(Bank bank){
+    public InternetShop(Bank bank) {
         this.bank = bank;
     }
 
     @Override
     public void withdraw(BigDecimal query) {
         if (currentCard != null) {
-            if (haveEnoughSumm(query)) {
-                setCurrentCardBalance(getCurrentCardBalance().subtract(query));
-                System.out.println("Сумма " + query + "списана со счета");
+            if (getClientCheck()) {
+                if (haveEnoughSumm(query)) {
+                    setCurrentCardBalance(getCurrentCardBalance().subtract(query));
+                    System.out.println("Сумма " + query + "списана со счета");
+                }
+            } else {
+                System.out.println("код подтверждения неверен операция отменена");
             }
         }
     }
@@ -34,28 +42,37 @@ public class InternetShop implements ProcessCardAble{
     public void processStopCard() {
         if (currentCard != null) {
             currentCard = null;
-            System.out.println("карта вынута из банкомата и находится вас в руках! ждем вас снова!");
+            System.out.println("спасибо! Чек будет выслан на ваш e-mail");
         }
     }
 
     @Override
     public boolean checkValid() {
-        System.out.println("c="+currentCard);
-        boolean cvvVal = getCurrentCard().checkValidByCvv(attemptCvv);
-        boolean dateVal = getCurrentCard().checkValidByDate(attemptDate);
-        return currentCard.checkValidByCvv(attemptCvv);
+        setAttemptCvv();
+        if(checkCvv()){
+            setAttemptDate();
+            if(checkDate()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkCvv(){
+        return getCurrentCard().checkValidByCvv(attemptCvv);
+    }
+
+    private boolean checkDate(){
+        return getCurrentCard().checkValidByDate(attemptDate);
     }
 
     @Override
     public void processStartCard(Card card) {
-        System.out.println("card="+card);
         setCurrentCard(card);
-        System.out.println("c="+currentCard);
-        setAttemptCvv();
         if(checkValid()) {
-            System.out.println("банкомат глотает карту(банкомат не выплюнул)");
+            System.out.println("спасибо! ваша карта принята к обслуживанию");
         } else {
-            System.out.println("неверный пин-код! банкомат выплевывает карту");
+            System.out.println("cvv или дата истечения срока карты неверны");
             setCurrentCard(null);
         }
     }
@@ -69,21 +86,39 @@ public class InternetShop implements ProcessCardAble{
         return false;
     }
 
-    private void setAttemptCvv() {
-        //System.out.println("yuy");
-        scanner = new Scanner(System.in);
-        //System.out.println("");
-        //System.out.println("введите трехзначный Cvv-код, с обратной стороны карты");
-        if(scanner == null){
-            System.out.println("scanner is null");
+    public boolean getClientCheck(){
+        int code = manageWithdrawConfirmationQuery();
+        Scanner scanner = Main.scanner;
+        String codeString = scanner.nextLine();
+        if(codeString.equals(String.valueOf(code))){
+            return true;
         }
+        return false;
+    }
+
+    public int manageWithdrawConfirmationQuery() {
+        int code = bank.getConfirmationCode();//получаем от банка код безопасности
+        System.out.println("you've got the sms: your confirmation code is: "+ code);
+        return code;
+    }
+
+    private void setAttemptCvv() {
+        scanner = new Scanner(System.in);
+        System.out.println("введите трехзначный Cvv-код, с обратной стороны карты [код 233]");
         attemptCvv = Integer.parseInt(scanner.nextLine());
     }
 
-    private void setExpirationDate() {
+    private void setAttemptDate() {
         scanner = Main.scanner;
-        System.out.println("введите дату  с карты в формате ");
-        attemptCvv = Integer.parseInt(scanner.nextLine());
+        System.out.println("введите дату  с карты в формате yyyy-MM-dd, например 2018-12-01 [вчерашняя дата на 3 года вперед от текущей, например 2021-12-03]");
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = scanner.nextLine();
+        try {
+            attemptDate = format.parse(dateString);
+        } catch (ParseException e) {
+            System.out.println("неправильный формат даты");
+            e.printStackTrace();
+        }
     }
 
     private Card getCurrentCard() {
@@ -91,7 +126,6 @@ public class InternetShop implements ProcessCardAble{
     }
 
     private void setCurrentCard(Card currentCard) {
-        System.out.println("currentCard="+currentCard);
         this.currentCard = currentCard;
     }
 
@@ -102,7 +136,4 @@ public class InternetShop implements ProcessCardAble{
     private void setCurrentCardBalance(BigDecimal bigDecimal) {
         currentCard.setBalance(bank, bigDecimal);
     }
-
-
-
 }

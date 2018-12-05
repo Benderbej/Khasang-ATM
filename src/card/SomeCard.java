@@ -23,10 +23,8 @@ public class SomeCard extends AbstractCard {
 
     public SomeCard(int cvv, String pin) throws CardImplementationException {
         this(Bank.getPaySystem(), Bank.getCardNum(), cvv, pin);
-        date = addThreeYearsToExpiration(new Date());
+        date = addThreeYearsToExpiration(getYesterdayDate(new Date()));//use emulation Date getYesterdayDate(new Date())
     }
-
-
 
     @Override
     public Date getExpirationDate() {
@@ -35,7 +33,9 @@ public class SomeCard extends AbstractCard {
 
     @Override
     public boolean checkValidByDate(Date date) {
-        if(this.date == date){
+        //System.out.println(date);
+        //System.out.println(trim(this.date));
+        if(trim(this.date).equals(date)){
             Date d = new Date();
             if(d.before(date)){
                 return true;
@@ -53,5 +53,24 @@ public class SomeCard extends AbstractCard {
         c.setTime(date);
         c.add(Calendar.YEAR, 3);
         return c.getTime();
+    }
+
+    private Date getYesterdayDate(Date date){//for emulation only
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, -1);
+        Date dateBefore = cal.getTime();
+        return dateBefore;
+    }
+
+    private Date trim(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.clear(); // as per BalusC comment.
+        cal.setTime( date );
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
     }
 }

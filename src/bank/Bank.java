@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Bank {
 
@@ -98,5 +99,11 @@ public class Bank {
         bankAccount.setBalance(bigDecimal);
         cardsAccounts.put(card, bankAccount);
         return true;
+    }
+
+    public int getConfirmationCode() {
+        int randomNum = ThreadLocalRandom.current().nextInt(1000, 9999);
+        System.out.println("randomNum "+randomNum);
+        return randomNum;
     }
 }
