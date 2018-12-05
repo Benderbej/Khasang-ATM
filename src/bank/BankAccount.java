@@ -32,7 +32,7 @@ public class BankAccount {
     }
 
     @Override
-    public int hashCode() {//НИКАКОГО БАЛАНСА НЕ ДОЛЖНО БЫТЬ В ХЕШ-ФУНКЦИИ!!! баланс - параметр изменяемый, а сами счета у нас кое где играют роль ключей в HashMap
+    public int hashCode() {//НИКАКОГО БАЛАНСА НЕ ДОЛЖНО БЫТЬ В ХЕШ-ФУНКЦИИ!!! баланс - параметр изменяемый, а сами счета у нас кое-где (Bank.cardsAccounts) играют роль ключей в HashMap
         return (int) (number ^ (number >>> 32));
     }
 }

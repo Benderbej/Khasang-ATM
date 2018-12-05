@@ -12,7 +12,6 @@ public class ATM implements ProcessCardAble {
     private Card currentCard;
     private String attemptPin;
     private Bank bank;
-    //private Scanner scanner;
 
     public ATM(Bank bank){
         this.bank = bank;
@@ -78,8 +77,7 @@ public class ATM implements ProcessCardAble {
         if (currentCard != null) {
             if (haveEnoughSumm(cashQuery)) {
                 setCurrentCardBalance(getCurrentCardBalance().subtract(cashQuery));
-                //System.out.println("withdrawCash() currentCard="+currentCard);
-                System.out.println("Сумма " + cashQuery + "списана со счета");
+                System.out.println("Сумма " + cashQuery + " списана со счета");
             }
         }
     }
@@ -90,10 +88,6 @@ public class ATM implements ProcessCardAble {
 
     private void setCurrentCardBalance(BigDecimal bigDecimal) {
         currentCard.setBalance(bank, bigDecimal);
-    }
-
-    public Card getCurrentCard() {
-        return currentCard;
     }
 
     private void setCurrentCard(Card currentCard) {
@@ -119,9 +113,4 @@ public class ATM implements ProcessCardAble {
         System.out.println("введите PIN-код, пожалуйста [3333]");
         attemptPin = scanner.nextLine();
     }
-
-    public int getCurrentPin(int currentPin) {
-        return currentPin;
-    }
-
 }

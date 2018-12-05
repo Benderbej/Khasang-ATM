@@ -22,38 +22,32 @@ public class Main {
         Client client = new Client("viktor_semenovich");
         BankAccount account = new BankAccount(353453455355345l);
         Card card = new SomeCard(233, "3333");
+        //сотрудник банка открыл счетб выпустил карточкуб привязал счет к карточке
         client = bank.firstServiceClient(client, card, account);
 
-        //hashCode() и equals() переопределены в Client(сначала client содержал и объекты BankAccount и Card и хешкод и equals были определены и там) что позволяет нам:
-        //где-то в банкомате... создать новый экземпляр, идентичный
-        Client theSameClient = new Client("viktor_semenovich");
-        BankAccount account2 = new BankAccount(353453455355345l);
-        Card card2 = new SomeCard(233, "3333");
-
-        theSameClient = bank.firstServiceClient(theSameClient, card2, account2);
-
+        //где-то в банкомате... (!!!!!!!новый экземпляр, идентичный, Client.hashcode() определен)
         //System.out.println("client hash"+client.hashCode());//возвращает hash 891650685
         //System.out.println("theSameClient hash"+theSameClient.hashCode());//возвращает такой же хеш 891650685
+        Client theSameClient = new Client("viktor_semenovich");
 
         if ( bank.getClients().contains(theSameClient)) {
             System.out.println("***работа с банкоматом***");
             ATM atm = new ATM(bank);
-            atm.processInsertCard(bank.getBasicCard(theSameClient));
-            atm.getBalance();
-            atm.putCash(new BigDecimal("20500"));
-            atm.getBalance();
-            atm.withdrawCash(new BigDecimal("240"));
-            atm.getBalance();
+            atm.processInsertCard(bank.getBasicCard(theSameClient));//вставляем карту, вводим пин
+            atm.getBalance();//смотрим баланс
+            atm.putCash(new BigDecimal("20500"));//кладем кеш
+            atm.getBalance();//смотрим баланс
+            atm.withdrawCash(new BigDecimal("240"));//берем кеш
+            atm.getBalance();//смотрим баланс
             atm.processInsertCard(bank.getBasicCard(theSameClient));//пробуем повторно впихнуть карту
-            atm.processEjectCard();
+            atm.processEjectCard();//забираем карту
 
             System.out.println("***работа с интернет магазином***");
             //пользуемся интерфейсом в обращении к InternetShop
             ProcessCardAble shop = new InternetShop(bank);
             Card c = bank.getBasicCard(theSameClient);
-            System.out.println(c);
-            shop.processStartCard(c);
-            shop.withdraw(new BigDecimal("1030"));
+            shop.processStartCard(c);//идентификация карты
+            shop.withdraw(new BigDecimal("1030"));//магазин списал денег со счета привязанного к карте
             shop.processStopCard();
         } else {
             System.out.println("client not found");

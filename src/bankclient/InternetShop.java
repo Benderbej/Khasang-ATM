@@ -25,6 +25,25 @@ public class InternetShop implements ProcessCardAble, ThreeDSecure {
     }
 
     @Override
+    public void processStartCard(Card card) {
+        setCurrentCard(card);
+        if(checkValid()) {
+            System.out.println("спасибо! ваша карта принята к обслуживанию");
+        } else {
+            System.out.println("cvv или дата истечения срока карты неверны");
+            setCurrentCard(null);
+        }
+    }
+
+    @Override
+    public void processStopCard() {
+        if (currentCard != null) {
+            currentCard = null;
+            System.out.println("спасибо! Чек будет выслан на ваш e-mail");
+        }
+    }
+
+    @Override
     public void withdraw(BigDecimal query) {
         if (currentCard != null) {
             if (getClientCheck()) {
@@ -35,14 +54,6 @@ public class InternetShop implements ProcessCardAble, ThreeDSecure {
             } else {
                 System.out.println("код подтверждения неверен операция отменена");
             }
-        }
-    }
-
-    @Override
-    public void processStopCard() {
-        if (currentCard != null) {
-            currentCard = null;
-            System.out.println("спасибо! Чек будет выслан на ваш e-mail");
         }
     }
 
@@ -64,17 +75,6 @@ public class InternetShop implements ProcessCardAble, ThreeDSecure {
 
     private boolean checkDate(){
         return getCurrentCard().checkValidByDate(attemptDate);
-    }
-
-    @Override
-    public void processStartCard(Card card) {
-        setCurrentCard(card);
-        if(checkValid()) {
-            System.out.println("спасибо! ваша карта принята к обслуживанию");
-        } else {
-            System.out.println("cvv или дата истечения срока карты неверны");
-            setCurrentCard(null);
-        }
     }
 
     private boolean haveEnoughSumm(BigDecimal cashQuery) {

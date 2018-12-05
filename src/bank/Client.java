@@ -4,9 +4,6 @@ import card.Card;
 
 import java.util.HashSet;
 
-/*
-для простоты пока каждый клиент является владельцем карты
- */
 public class Client {
 
     private String cardOwnerNameLat;
@@ -28,13 +25,5 @@ public class Client {
     @Override
     public int hashCode() {
         return cardOwnerNameLat != null ? cardOwnerNameLat.hashCode() : 0;
-    }
-
-    public BankAccount getBasicAccount(Bank bank) {
-        return bank.getBasicAccount(this);
-    }
-
-    public Card getBasicCard(Bank bank){
-        return bank.getBasicCard(this);
-    }
+    }//TODO по хорошему уникальность хешкода клиента, конечно, не может быть основана только на его имени, ужен уникальный идентификатор
 }

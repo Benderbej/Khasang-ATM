@@ -24,7 +24,7 @@ public class Bank {
     private HashMap<BankAccount, Card> accountsCards;
     private static PaySystem defaultPaySystem;
 
-    public Bank() {
+    public Bank() {//помню, про то что в конструкторе создавать новые экземпляры  моветон - ибо создает трудности в тестировании(класс отдельно не протестировать от других)
         this.clients = new HashSet<>();
         this.clientsBasicAccounts = new HashMap<>();
         clientsAccounts = new HashMap<>();
@@ -53,16 +53,11 @@ public class Bank {
 
     public Client firstServiceClient(Client client, Card card, BankAccount account){//обслуживание нового клиента по выпуску карты и созданию основного счета
         addClient(client);
-
         addAccount(client, account);
         clientsBasicAccounts.put(client, account);
         addCard(card);
         bindAccountToCard(card, account);
         clients.add(client);
-        return client;
-    }
-
-    private Client updateClient(Client client, BankAccount bankAccount) {
         return client;
     }
 

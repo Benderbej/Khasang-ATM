@@ -33,8 +33,6 @@ public class SomeCard extends AbstractCard {
 
     @Override
     public boolean checkValidByDate(Date date) {
-        //System.out.println(date);
-        //System.out.println(trim(this.date));
         if(trim(this.date).equals(date)){
             Date d = new Date();
             if(d.before(date)){
@@ -65,7 +63,7 @@ public class SomeCard extends AbstractCard {
 
     private Date trim(Date date) {
         Calendar cal = Calendar.getInstance();
-        cal.clear(); // as per BalusC comment.
+        cal.clear();
         cal.setTime( date );
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
