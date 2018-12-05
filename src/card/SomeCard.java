@@ -48,14 +48,14 @@ public class SomeCard extends AbstractCard {
         return false;
     }
 
-    private Date addThreeYearsToExpiration(Date date){
+    private Date addThreeYearsToExpiration(Date date) {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         c.add(Calendar.YEAR, 3);
         return c.getTime();
     }
 
-    private Date getYesterdayDate(Date date){//for emulation only
+    private Date getYesterdayDate(Date date) {//for emulation only
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(Calendar.DATE, -1);

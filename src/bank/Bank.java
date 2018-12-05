@@ -73,7 +73,7 @@ public class Bank {
         return cardNum;
     }
 
-    public static PaySystem getPaySystem(){
+    public static PaySystem getPaySystem() {
         PaySystem paySystem = defaultPaySystem;
         return paySystem;
     }
@@ -94,7 +94,7 @@ public class Bank {
         return cardsAccounts.get(card);
     }
 
-    public boolean setAccountBalance(Card card, BigDecimal bigDecimal){//метод обновляет все коллекции класса чтобы не нарушить целостность данных
+    public boolean setAccountBalance(Card card, BigDecimal bigDecimal) {//метод обновляет все коллекции класса чтобы не нарушить целостность данных
         BankAccount bankAccount = cardsAccounts.get(card);
         bankAccount.setBalance(bigDecimal);
         cardsAccounts.put(card, bankAccount);
